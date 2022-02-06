@@ -95,11 +95,20 @@ def plot_omicron_share(df, reason, scale, collapsed):
     fig, ax = plt.subplots(num=None, figsize=(6.75, 4), facecolor="w", edgecolor="k")
     plt.subplots_adjust(left=0.15, right=0.9, top=0.9, bottom=0.25)
     sns.scatterplot(data=plot_df, x="date", y="share", hue="lineage", size="all", sizes=(10, 100))
-    
+    ax.set_xlim([dt.date(2021, 11, 18), dt.date.today()])
+
     fig.text(
         0.51,
         0.1,
         f"Datenstand: {str(dt.date.today())} | Datenquelle: RKI Sequenzdaten https://doi.org/10.5281/zenodo.5139363 | Viz: @CorneliusRoemer, @LenaSchimmel",
+        size=6,
+        va="bottom",
+        ha="center",
+    )
+    fig.text(
+        0.51,
+        0.065,
+        f"Tagesaktuelle Fassung und tabellarische Daten unter https://github.com/lenaschimmel/desh-data",
         size=6,
         va="bottom",
         ha="center",
