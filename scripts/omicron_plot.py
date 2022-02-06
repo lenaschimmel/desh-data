@@ -36,10 +36,31 @@ df.rename(
     },
     inplace=True,
 )
-#%%
-def plot_omicron_share(df, reason, scale):
-    lineages = ["BA.1", "BA.1.1", "BA.2", "BA.3"]
 
+def collapse_pango(var):
+    if var.startswith("BA.1."):
+        var = "BA.1"
+
+    if var.startswith("BA.2."):
+        var = "BA.2"
+
+    return var
+
+
+def rename_pango(var):
+    if var.startswith("AY."):
+        var = "B.1.617.2"
+
+    return var
+
+
+#%%
+def plot_omicron_share(df, reason, scale, collapsed):
+    lineages = ["BA.1", "BA.2", "BA.3", "B.1.617.2"]
+    if not collapsed:
+        lineages.extend(["BA.1.1"])
+
+    lin_count = len(lineages)
     df_date = df[df.date > "2021-11-18"]
 
     if reason in ["N", "Y"]:
@@ -48,6 +69,17 @@ def plot_omicron_share(df, reason, scale):
         df_reason = df_date[df_date.reason.isin(["N", "X"])]
     else:
         df_reason = df_date
+    df_reason = df_reason.copy()
+
+    collapse_suffix = ""
+
+    df_reason["lineage"] = df_reason["lineage"].apply(rename_pango)
+    
+    if collapsed:
+        df_reason["lineage"] = df_reason["lineage"].apply(collapse_pango)
+        collapse_suffix = "_collapsed"
+
+    df_reason["lineage"] = df_reason["lineage"].astype("category")
 
     df_filter =  df_reason.loc[df_reason['lineage'].isin(lineages)]
    
@@ -92,7 +124,11 @@ def plot_omicron_share(df, reason, scale):
     ax.get_legend().set_title("Proben-Anzahl")
     handles, labels = ax.get_legend_handles_labels()
     labels[0] = "Variante"
-    labels[lin_count+1] = "Gesamtzahl"
+    labels[1] = "Delta" # "(B.1.617.2 | AY.*)"
+    if collapsed:
+        labels[2] = "BA.1.*"
+    labels = labels[:lin_count+1]
+    #labels[lin_count+1] = "Gesamtzahl"
     ax.legend(handles, labels)
 
     locator = mdates.AutoDateLocator()
@@ -110,7 +146,7 @@ def plot_omicron_share(df, reason, scale):
         )
     )
 
-    fig.savefig(f"plots/omicron_{reason}_{scale}.png", dpi=300)
+    fig.savefig(f"plots/omicron_{reason}_{scale}{collapse_suffix}.png", dpi=300)
 
     # Now prepare data for CSV export
     piv = plot_df.pivot(index="date", columns="lineage", values=["matches", "all"]).fillna(0)
@@ -126,15 +162,19 @@ def plot_omicron_share(df, reason, scale):
     
     # take 2nd level label (lineage) except where only 1st level exists
     piv.columns = [(a[1] or a[0]) for a in piv.columns.to_flat_index()] 
-    piv.to_csv(f"data/table/omicron_{reason}.csv")
+    piv.to_csv(f"data/table/omicron_{reason}{collapse_suffix}.csv")
 
 
 #%%
-plot_omicron_share(df, "N", "logit")
-plot_omicron_share(df, "N", "linear")
-
-plot_omicron_share(df, "all", "logit")
-plot_omicron_share(df, "all", "linear")
-
-plot_omicron_share(df, "NX", "logit")
-plot_omicron_share(df, "NX", "linear")
+plot_omicron_share(df, "N"  , "logit" , False)
+plot_omicron_share(df, "N"  , "linear", False)
+plot_omicron_share(df, "all", "logit" , False)
+plot_omicron_share(df, "all", "linear", False)
+plot_omicron_share(df, "NX" , "logit" , False)
+plot_omicron_share(df, "NX" , "linear", False)
+plot_omicron_share(df, "N"  , "logit" , True)
+plot_omicron_share(df, "N"  , "linear", True)
+plot_omicron_share(df, "all", "logit" , True)
+plot_omicron_share(df, "all", "linear", True)
+plot_omicron_share(df, "NX" , "logit" , True)
+plot_omicron_share(df, "NX" , "linear", True)
