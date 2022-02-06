@@ -58,7 +58,7 @@ def plot_omicron_share(df, reason, scale):
 
     plot_df = pd.merge(df_matches, daily_all, on="date")
     plot_df["share"] = np.clip(plot_df["matches"] / plot_df["all"], 0.0, 0.999) # 1.0 cannot be shown on logit scale
-    plot_df["lineage"].cat.remove_unused_categories(inplace=True)
+    plot_df["lineage"] = plot_df["lineage"].cat.remove_unused_categories()
 
     fig, ax = plt.subplots(num=None, figsize=(6.75, 4), facecolor="w", edgecolor="k")
     plt.subplots_adjust(left=0.15, right=0.9, top=0.9, bottom=0.25)
