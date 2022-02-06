@@ -23,4 +23,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Plot update
-          file_pattern: plots/*
+          file_pattern: plots/* data/table/*
