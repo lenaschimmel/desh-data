@@ -39,6 +39,7 @@ df.rename(
 #%%
 def plot_omicron_share(df, reason, scale):
     lineages = ["BA.1", "BA.2", "BA.3", "BA.1.1"]
+    lin_count = len(lineages)
 
     df_date = df[df.date > "2021-11-18"]
 
@@ -92,7 +93,7 @@ def plot_omicron_share(df, reason, scale):
     ax.get_legend().set_title("Proben-Anzahl")
     handles, labels = ax.get_legend_handles_labels()
     labels[0] = "Variante"
-    labels[len(lineages)+1] = "Gesamtzahl"
+    labels[lin_count+1] = "Gesamtzahl"
     ax.legend(handles, labels)
 
     locator = mdates.AutoDateLocator()
@@ -111,6 +112,22 @@ def plot_omicron_share(df, reason, scale):
     )
 
     fig.savefig(f"plots/omicron_{reason}_{scale}.png", dpi=300)
+
+    # Now prepare data for CSV export
+    piv = plot_df.pivot(index="date", columns="lineage", values=["matches", "all"]).fillna(0)
+
+    # very lazy way to get the overall count of sequences from multiple "sum" columns.
+    # At least one has the correct value, which is also always the max value.
+    piv['Sum'] = piv.max(axis=1)
+    
+    # use columns with lineages, and then the last column (max)
+    cols = list(range(lin_count)) 
+    cols.append(len(piv.columns) - 1)
+    piv = piv.iloc[:,cols].astype(int)
+    
+    # take 2nd level label (lineage) except where only 1st level exists
+    piv.columns = [(a[1] or a[0]) for a in piv.columns.to_flat_index()] 
+    piv.to_csv(f"data/table/omicron_{reason}.csv")
 
 
 #%%
