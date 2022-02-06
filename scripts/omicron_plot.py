@@ -38,8 +38,7 @@ df.rename(
 )
 #%%
 def plot_omicron_share(df, reason, scale):
-    lineages = ["BA.1", "BA.2", "BA.3", "BA.1.1"]
-    lin_count = len(lineages)
+    lineages = ["BA.1", "BA.1.1", "BA.2", "BA.3"]
 
     df_date = df[df.date > "2021-11-18"]
 
