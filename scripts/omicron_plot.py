@@ -138,7 +138,7 @@ def plot_omicron_share(df, reason, scale, collapsed):
         title = "der repräsentativen Surveillance"
     else:
         title = f"Proben vom Typ {reason}"
-    ax.set_title(f"Omikron-Varianten-Anteil in Deutschland in {title}")
+    ax.set_title(f"Varianten-Anteile in Deutschland in {title}")
 
     ax.get_legend().set_title("Proben-Anzahl")
     handles, labels = ax.get_legend_handles_labels()
