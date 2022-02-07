@@ -97,6 +97,8 @@ def plot_omicron_share(df, reason, scale, collapsed):
     sns.scatterplot(data=plot_df, x="date", y="share", hue="lineage", size="all", sizes=(10, 100))
     ax.set_xlim([dt.date(2021, 11, 18), dt.date.today()])
 
+    filename = f"plots/omicron_{reason}_{scale}{collapse_suffix}.png"
+
     fig.text(
         0.51,
         0.1,
@@ -109,6 +111,14 @@ def plot_omicron_share(df, reason, scale, collapsed):
         0.51,
         0.065,
         f"Tagesaktuelle Fassung und tabellarische Daten unter https://github.com/lenaschimmel/desh-data",
+        size=6,
+        va="bottom",
+        ha="center",
+    )
+    fig.text(
+        0.51,
+        0.03,
+        f"Name dieser Datei: {filename}",
         size=6,
         va="bottom",
         ha="center",
@@ -155,7 +165,7 @@ def plot_omicron_share(df, reason, scale, collapsed):
         )
     )
 
-    fig.savefig(f"plots/omicron_{reason}_{scale}{collapse_suffix}.png", dpi=300)
+    fig.savefig(filename, dpi=300)
 
     # Now prepare data for CSV export
     piv = plot_df.pivot(index="date", columns="lineage", values=["matches", "all"]).fillna(0)
