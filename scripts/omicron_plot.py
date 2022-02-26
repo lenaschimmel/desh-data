@@ -178,6 +178,14 @@ def plot_omicron_share(df, reason, scale, collapsed):
     cols = list(range(lin_count)) 
     cols.append(len(piv.columns) - 1)
     piv = piv.iloc[:,cols].astype(int)
+
+    # the column "Sum" is misleading, because it is not the sum of the previous columns,
+    # but the sum of all sequences, even those with "other" lineage, which are not
+    # counted in any exisitng column.
+    # Therefore, let's add another colum "Other". The way to compute this is very hacky.
+    # I hope someone with better knowledge of Pandas can clean this up later!
+    piv['Other'] =  piv['Sum'] * 2 - piv.sum(axis=1)
+    
     
     # take 2nd level label (lineage) except where only 1st level exists
     piv.columns = [(a[1] or a[0]) for a in piv.columns.to_flat_index()] 
