@@ -45,7 +45,7 @@ def collapse_pango(var):
     if var.startswith("BA.2."):
         var = "BA.2"
 
-    if var.startswith("BA.3"):
+    if var.startswith("BA.3."):
         var = "BA.3"
 
     return var
@@ -149,7 +149,7 @@ def plot_omicron_share(df, reason, scale, collapsed):
     labels[0] = "Variante"
     labels[1] = "Delta" # "(B.1.617.2 | AY.*)"
     if collapsed:
-        labels[2] = "BA.1.* | BC.*"
+        labels[2] = "BA.1.*"
         labels[3] = "BA.2.*"
     labels = labels[:lin_count+1]
     #labels[lin_count+1] = "Gesamtzahl"
