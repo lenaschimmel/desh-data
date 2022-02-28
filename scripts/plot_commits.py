@@ -9,7 +9,7 @@ import seaborn as sns
 
 import requests
 
-url_base = "https://api.github.com/repos/robert-koch-institut/SARS-CoV-2-Sequenzdaten_aus_Deutschland/commits?per_page=50&path="
+url_base = "https://api.github.com/repos/robert-koch-institut/SARS-CoV-2-Sequenzdaten_aus_Deutschland/commits?per_page=100&path="
 files = [
      { "short": "Entwicklungslinien", "long": "SARS-CoV-2-Entwicklungslinien_Deutschland.csv.xz" },  
      { "short": "Metadaten (csv)", "long": "SARS-CoV-2-Sequenzdaten_Deutschland.csv.xz" }, 
@@ -44,10 +44,10 @@ ax.yaxis.set_major_locator(mdates.HourLocator(byhour=range(24), interval=2))
 ax.yaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
 
 # x axis
-ax.set_xlim([dt.date.today() - dt.timedelta(days=14), dt.date.today()  + dt.timedelta(days=1)])
+ax.set_xlim([dt.date.today() - dt.timedelta(days=32), dt.date.today()  + dt.timedelta(days=1)])
 ax.set_xlabel('Datum')
-#locator = mdates.AutoDateLocator()
-locator = ticker.MultipleLocator(base=1.0)
+locator = mdates.AutoDateLocator()
+#locator = ticker.MultipleLocator(base=1.0)
 formatter = mdates.ConciseDateFormatter(locator)
 ax.xaxis.set_major_locator(locator)
 ax.xaxis.set_major_formatter(formatter)
@@ -57,6 +57,7 @@ ax.grid(True, which="minor", linewidth=0.1)
 ax.set_axisbelow(True)
 
 sns.scatterplot(data=df, x="date", y="time", hue="file", style="file", markers=['<', 'D', 'v'])
+ax.legend(loc='center left')
 
 filename = f"plots/commits.png"
 
