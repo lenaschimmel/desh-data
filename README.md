@@ -34,7 +34,7 @@ Updates des RKI                   | Verarbeitungsverzug
 Genau genommen sind in den Grafiken und Tabellen nur Sequenzen enthalten, die sowohl in den _Entwicklungslinien_ als auch in den _Metadaten_ vorliegen. Die ältere dieser beiden Dateien gibt somit den tatäschlichen Datenstand dieser Auswertungen vor.
 
 ## Weitere Grafiken
-Im Verzeichnis (plots)[https://github.com/lenaschimmel/desh-data/tree/main/plots] befinden sich die die oben gezeigten Grafiken sowie viele weitere Variationen davon. Ein Dateiname wie `omicron_N_linear_collapsed.png` besteht aus den folgenden Teilen:
+Im Verzeichnis [plots](https://github.com/lenaschimmel/desh-data/tree/main/plots) befinden sich die die oben gezeigten Grafiken sowie viele weitere Variationen davon. Ein Dateiname wie `omicron_N_linear_collapsed.png` besteht aus den folgenden Teilen:
 
 `omicron_{grund}_{skala}_{collapsed?}.png`
 
@@ -49,7 +49,7 @@ all    | Zusammenfassung aller Proben, unabhängig vom Grund
 
 Skala  | Beschreibung
 -------| ------------
-linar  | Gewöhnliche Skala von 0% bis 100%
+linear | Gewöhnliche Skala von 0% bis 100%
 logit  | Die Hälten oberhalb und unterhalb von 50% verhalten sich in etwa wie eine logarithmische Skala
 
 Wenn der Name `collapsed` enthält, sind ähnliche Varianten zusammen gefasst. Ansonsten werden sie einzeln angegeben.
