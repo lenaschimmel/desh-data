@@ -1,99 +1,38 @@
-# Pango lineage information for German SARS-CoV-2 sequences
+# Verteilung der SARS-CoV-2-Varianten in Deutschland
 
-This repository contains a join of the metadata and pango lineage tables of all German SARS-CoV-2 sequences published by the Robert-Koch-Institut on [Github](https://github.com/robert-koch-institut/SARS-CoV-2-Sequenzdaten_aus_Deutschland).
+## Datenquelle und weitere Informationen
+Die Auswertungen basieren auf dem Datensatz ["SARS-CoV-2-Sequenzdaten aus Deutschland"](https://github.com/robert-koch-institut/SARS-CoV-2-Sequenzdaten_aus_Deutschland) des Robert-Koch-Instituts. Zur Aktualität dieser Daten siehe auch den Abschnitt "Aktualität" weiter unten.
 
-The data here is updated every hour, automatically through a Github action, so whenever new data appears in the RKI repo, you will see it here within at most an hour.
+Dieses Repository ist ein Fork des gleichnamigen Repositories von @corneliusroemer. Für weitere Informationen und eine umfrangreichere README siehe [dort](https://github.com/corneliusroemer/desh-data).
 
-The resulting dataset can be downloaded here, beware it's currently around 50MB in size: <https://raw.githubusercontent.com/corneliusroemer/desh-data/main/data/meta_lineages.csv>
+## Variantenanteile in Deutschland
+Die unten stehenden Grafiken basieren auf der "Repräsentativen Surveillance" in Deutschland, d.h. aus allen PCR-positiven Proben eines Tages werden zufällig bis zu 5% ausgewählt und Sequenziert. Durch die Sequenzierung kann die Variante genau bestimmt werden.
 
-## Omicron share plot
+Die beiden folgenden Grafiken unterscheiden sich nur in der Skalierung der Y-Achse. Die lineare Skala ist einfacher zu lesen, für die Extrapolation des Verlaufs in die Zukunft ist eine Logit-Skala oft praktischer.
 
-Type `N` means representative surveillance. Type `X` means unknown, but since this is unlikely to be heavily targeted and includes quite a number of labs I include it now in the main plot (hence type `NX`).
+Linear                                       |  Logit
+:-------------------------------------------:|:-------------------------:
+![N Linear Plot](plots/omicron_N_linear.png) | ![N Logit Plot](plots/omicron_N_logit.png)
 
-![Omicron Logit Plot](plots/omicron_N_logit.png)
 
-![Omicron Logit Plot](plots/omicron_N_linear.png)
+In den folgenden Darstellungen wurden ähnliche Varianten (derzeit nur BA.1 und BA.1.1) zusammen gefasst:
 
-![Omicron share by zip code area](plots/omi_share_by_area.png)
+Linear                                                 |  Logit
+:-----------------------------------------------------:|:-------------------------:
+![N Linear Plot](plots/omicron_N_linear_collapsed.png) | ![N Logit Plot](plots/omicron_N_logit_collapsed.png)
 
-## Description of data
+## Aktualität
+Die Grafiken werden alle zwei Stunden neu generiert, aber ihre Inhalte sind natürlich nur so aktuell wie die zu Grunde liegenden Daten des RKI. Diese werden etwa einmal täglich aktualisiert, im letzten Monat wie folgt.
 
-Column description:
+![Commit Plot](plots/commits.png)
 
-- IMS_ID: Unique identifier of the sequence
-- DATE_DRAW: Date the sample was taken from the patient
-- SEQ_REASON: Reason for sequencing, one of:
-  - X: Unknown
-  - N: Random sampling
-  - Y: Targeted sequencing (exact reason unknown)
-  - A[\<reason\>]: Targeted sequencing because variant PCR indicated VOC
-- PROCESSING_DATE: Date the sample was processed by the RKI and added to Github repo
-- SENDING_LAB_PC: Postcode (PLZ) of lab that did the initial PCR
-- SEQUENCING_LAB_PC: Postcode (PLZ) of lab that did the sequencing
-- lineage: Pango lineage as reported by `pangolin`
-- scorpio_call: Alternative, rough, variant as determined by `scorpio` (part of `pangolin`), this is less precise but a bit more robust than `pangolin`.
+Genau genommen sind in den Grafiken und Tabellen nur Sequenzen enthalten, die sowohl in den _Entwicklungslinien_ als auch in den _Metadaten_ vorliegen. Die ältere dieser beiden Dateien gibt somit den tatäschlichen Datenstand dieser Auswertungen vor.
 
-## Excerpt
-
-Here are the first 10 lines of the dataset.
-
-```csv
-IMS_ID,DATE_DRAW,SEQ_REASON,PROCESSING_DATE,SENDING_LAB_PC,SEQUENCING_LAB_PC,lineage,scorpio_call
-IMS-10294-CVDP-00001,2021-01-14,X,2021-01-25,40225,40225,B.1.1.297,
-IMS-10025-CVDP-00001,2021-01-17,N,2021-01-26,10409,10409,B.1.389,
-IMS-10025-CVDP-00002,2021-01-17,N,2021-01-26,10409,10409,B.1.258,
-IMS-10025-CVDP-00003,2021-01-17,N,2021-01-26,10409,10409,B.1.177.86,
-IMS-10025-CVDP-00004,2021-01-17,N,2021-01-26,10409,10409,B.1.389,
-IMS-10025-CVDP-00005,2021-01-18,N,2021-01-26,10409,10409,B.1.160,
-IMS-10025-CVDP-00006,2021-01-17,N,2021-01-26,10409,10409,B.1.1.297,
-IMS-10025-CVDP-00007,2021-01-18,N,2021-01-26,10409,10409,B.1.177.81,
-IMS-10025-CVDP-00008,2021-01-18,N,2021-01-26,10409,10409,B.1.177,
-IMS-10025-CVDP-00009,2021-01-18,N,2021-01-26,10409,10409,B.1.1.7,Alpha (B.1.1.7-like)
-IMS-10025-CVDP-00010,2021-01-17,N,2021-01-26,10409,10409,B.1.1.7,Alpha (B.1.1.7-like)
-IMS-10025-CVDP-00011,2021-01-17,N,2021-01-26,10409,10409,B.1.389,
-```
-
-## Suggested import into pandas
-
-You can import the data into pandas as follows:
-
-```python
-#%%
-import pandas as pd
-
-#%%
-df = pd.read_csv(
-    'https://raw.githubusercontent.com/corneliusroemer/desh-data/main/data/meta_lineages.csv',
-    index_col=0,
-    parse_dates=[1,3],
-    infer_datetime_format=True,
-    cache_dates=True,
-    dtype = {'SEQ_REASON': 'category',
-             'SENDING_LAB_PC': 'category',
-             'SEQUENCING_LAB_PC': 'category',
-             'lineage': 'category',
-             'scorpio_call': 'category'
-             }
-)
-#%%
-df.rename(columns={
-    'DATE_DRAW': 'date',
-    'PROCESSING_DATE': 'processing_date',
-    'SEQ_REASON': 'reason',
-    'SENDING_LAB_PC': 'sending_pc',
-    'SEQUENCING_LAB_PC': 'sequencing_pc',
-    'lineage': 'lineage',
-    'scorpio_call': 'scorpio'
-    },
-    inplace=True
-)
-df
-```
+## Weitere Auswertungen
+ * Detaillierte [Auswertung auf Bundeslandebene](https://github.com/mg14/desh-data/blob/bundeslaender/genomicsurveillance.ipynb) von [Moritz Gerstung](https://github.com/mg14) - leider nicht stets aktuell
 
 ## License
 
 The underlying files that I use as input are licensed by RKI under CC-BY 4.0, see more details here: <https://github.com/robert-koch-institut/SARS-CoV-2-Sequenzdaten_aus_Deutschland#lizenz>.
 
 The software here is licensed under the "Unlicense". You can do with it whatever you want.
-
-For the data, just cite the original source, no need to cite this repo since it's just a trivial join.
