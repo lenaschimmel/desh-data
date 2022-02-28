@@ -10,6 +10,8 @@ Die unten stehenden Grafiken basieren auf der "Repräsentativen Surveillance" in
 
 Die beiden folgenden Grafiken unterscheiden sich nur in der Skalierung der Y-Achse. Die lineare Skala ist einfacher zu lesen, für die Extrapolation des Verlaufs in die Zukunft ist eine Logit-Skala oft praktischer.
 
+_Hinweis: Alle Grafiken auf dieser Seite können durch einen Klick vergrößert werden._
+
 Linear                                       |  Logit
 :-------------------------------------------:|:-------------------------:
 ![N Linear Plot](plots/omicron_N_linear.png) | ![N Logit Plot](plots/omicron_N_logit.png)
