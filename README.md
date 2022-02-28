@@ -14,14 +14,16 @@ _Hinweis: Alle Grafiken auf dieser Seite können durch einen Klick vergrößert 
 
 Linear                                       |  Logit
 :-------------------------------------------:|:-------------------------:
-![N Linear Plot](plots/omicron_N_linear.png) | ![N Logit Plot](plots/omicron_N_logit.png)
+![N Linear Plot](https://raw.githubusercontent.com/lenaschimmel/desh-data/main/plots/omicron_N_linear.png) | ![N Logit Plot](https://raw.githubusercontent.com/lenaschimmel/desh-data/main/plots/omicron_N_logit.png)
+
+
 
 
 In den folgenden Darstellungen wurden ähnliche Varianten (derzeit nur BA.1 und BA.1.1) zusammen gefasst:
 
 Linear                                                 |  Logit
 :-----------------------------------------------------:|:-------------------------:
-![N Linear Plot](plots/omicron_N_linear_collapsed.png) | ![N Logit Plot](plots/omicron_N_logit_collapsed.png)
+![N Linear Plot](https://raw.githubusercontent.com/lenaschimmel/desh-data/main/plots/omicron_N_linear_collapsed.png) | ![N Logit Plot](https://raw.githubusercontent.com/lenaschimmel/desh-data/main/plots/omicron_N_logit_collapsed.png)
 
 ## Aktualität
 Die Grafiken werden alle zwei Stunden neu generiert, aber ihre Inhalte sind natürlich nur so aktuell wie die zu Grunde liegenden Daten des RKI. Diese werden etwa einmal täglich aktualisiert. Wann genau dies im letzten Monat passiert ist, zeigt die linke Grafik.
@@ -30,7 +32,7 @@ Alle Proben werden in den Grafiken nach dem Zeitpunkt der Entnahme dargestellt. 
 
 Updates des RKI                   | Verarbeitungsverzug
 :--------------------------------:|:-------------------------:
-![Commit Plot](plots/commits.png) | ![N Logit Plot](plots/sequencing_delay.png)
+![Commit Plot](https://raw.githubusercontent.com/lenaschimmel/desh-data/main/plots/commits.png) | ![N Logit Plot](https://raw.githubusercontent.com/lenaschimmel/desh-data/main/plots/sequencing_delay.png)
 
 
 Genau genommen sind in den Grafiken und Tabellen nur Sequenzen enthalten, die sowohl in den _Entwicklungslinien_ als auch in den _Metadaten_ vorliegen. Die ältere dieser beiden Dateien gibt somit den tatäschlichen Datenstand dieser Auswertungen vor.
