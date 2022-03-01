@@ -91,6 +91,13 @@ def plot_omicron_share(df, reason, scale, collapsed):
     
     daily_all = df_reason.resample("D", on="date")["lineage"].count().reset_index(name='all')
 
+    palette = {
+        "B.1.617.2": "tab:blue",
+        "BA.1": "tab:orange",
+        "BA.1.1": "tab:red",
+        "BA.2": "tab:green",
+        "BA.3": "tab:pink"
+    };
 
     plot_df = pd.merge(df_matches, daily_all, on="date")
     plot_df["share"] = np.clip(plot_df["matches"] / plot_df["all"], 0.0, 0.999) # 1.0 cannot be shown on logit scale
@@ -98,7 +105,7 @@ def plot_omicron_share(df, reason, scale, collapsed):
 
     fig, ax = plt.subplots(num=None, figsize=(6.75, 4), facecolor="w", edgecolor="k")
     plt.subplots_adjust(left=0.15, right=0.9, top=0.9, bottom=0.25)
-    sns.scatterplot(data=plot_df, x="date", y="share", hue="lineage", size="all", sizes=(10, 100))
+    sns.scatterplot(data=plot_df, x="date", y="share", hue="lineage", size="all", sizes=(10, 100), palette=palette)
     ax.set_xlim([dt.date(2021, 11, 18), dt.date.today()])
 
     filename = f"plots/omicron_{reason}_{scale}{collapse_suffix}.png"
