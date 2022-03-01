@@ -4,15 +4,16 @@ import datetime as dt
 import matplotlib.dates as mdates
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import matplotlib as mpl
 import pandas as pd
 import seaborn as sns
 
 import requests
 
-url_base = "https://api.github.com/repos/robert-koch-institut/SARS-CoV-2-Sequenzdaten_aus_Deutschland/commits?per_page=100&path="
+url_base = "https://api.github.com/repos/robert-koch-institut/SARS-CoV-2-Sequenzdaten_aus_Deutschland/commits?per_page=50&path="
 files = [
      { "short": "Entwicklungslinien", "long": "SARS-CoV-2-Entwicklungslinien_Deutschland.csv.xz" },  
-     { "short": "Metadaten (csv)", "long": "SARS-CoV-2-Sequenzdaten_Deutschland.csv.xz" }, 
+     { "short": "Metadaten (csv)", "long": "SARS-CoV-2-Sequenzdaten_Deutschland.csv.xz" },
      { "short": "Sequenzdaten (fasta)", "long": "SARS-CoV-2-Sequenzdaten_Deutschland.fasta.xz" }
 ]
 
@@ -33,6 +34,7 @@ df["date"] = df["datetime"].apply(lambda d: dt.datetime(d.year, d.month, d.day))
 fig, ax = plt.subplots(num=None, figsize=(6.75, 4), facecolor="w", edgecolor="k")
 plt.subplots_adjust(left=0.15, right=0.9, top=0.9, bottom=0.25)
 
+ax.set_title(f"Updates der Sequenzdaten durch das RKI")
 
 # y axis
 ax.set_ylabel('Uhrzeit')
@@ -40,7 +42,7 @@ d1 = str(df.time.min().date())+' 00:00'
 d2 = str(df.time.min().date() + dt.timedelta(days=1))
 y_time = pd.date_range(start=d1, end=d2,freq='H')
 ax.set_ylim([y_time.min(), y_time.max()])
-ax.yaxis.set_major_locator(mdates.HourLocator(byhour=range(24), interval=2))
+ax.yaxis.set_major_locator(mdates.HourLocator(byhour=range(24), interval=4))
 ax.yaxis.set_major_formatter(mdates.DateFormatter('%H:%M'))
 
 # x axis
@@ -56,7 +58,8 @@ ax.grid(True, which="major", linewidth=0.25)
 ax.grid(True, which="minor", linewidth=0.1)
 ax.set_axisbelow(True)
 
-sns.scatterplot(data=df, x="date", y="time", hue="file", style="file", markers=['<', 'D', 'v'])
+markers = [mpl.path.Path.wedge(x * 120, (x+1) * 120) for x in range(0,3)];
+sns.scatterplot(data=df, x="date", y="time", hue="file", style="file", markers=markers, s=100)
 ax.legend(loc='center left')
 
 filename = f"plots/commits.png"
