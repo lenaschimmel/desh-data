@@ -54,13 +54,16 @@ def collapse_pango(var):
 def rename_pango(var):
     if var.startswith("AY."):
         var = "B.1.617.2"
+    
+    if var.startswith("None"):
+        var = "Unklar"
 
     return var
 
 
 #%%
 def plot_omicron_share(df, reason, scale, collapsed):
-    lineages = ["BA.1", "BA.2", "BA.3", "B.1.617.2"]
+    lineages = ["BA.1", "BA.2", "BA.3", "B.1.617.2", "Unklar"]
     if not collapsed:
         lineages.extend(["BA.1.1"])
 
@@ -96,7 +99,8 @@ def plot_omicron_share(df, reason, scale, collapsed):
         "BA.1": "tab:orange",
         "BA.1.1": "tab:red",
         "BA.2": "tab:green",
-        "BA.3": "tab:pink"
+        "BA.3": "tab:pink",
+        "Unklar": "tab:brown"
     };
 
     plot_df = pd.merge(df_matches, daily_all, on="date")
