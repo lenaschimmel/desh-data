@@ -10,7 +10,7 @@ Die unten stehenden Grafiken basieren auf der "Repräsentativen Surveillance" in
 
 Die beiden folgenden Grafiken unterscheiden sich nur in der Skalierung der Y-Achse. Die lineare Skala ist einfacher zu lesen, für die Extrapolation des Verlaufs in die Zukunft ist eine Logit-Skala oft praktischer.
 
-Neuerdings werden auch Proben mit der Beschriftung "Unklar" angezeigt. Dies sind Sequenzen, die nicht mit absoluter Sicherheit einer bestimmten Variante zugeordnet werden konnten. Diese hat es immer schon gegeben, aber bisher wurden sie nicht mit in den Grafiken aufgeführt. Der Anteil wächst seit einiger Zeit, was aber (noch) kein Grund zur Sorge sein muss. So gut wie alle dieser Proben gehören nach wie vor zu einer Omicron-Variante (Stand 5.3.22), jedoch ohne absolute Sicherheit, welche genau.
+Neuerdings werden auch Proben mit der Beschriftung "Unklar" angezeigt. Dies sind Sequenzen, die nicht mit absoluter Sicherheit einer bestimmten Variante zugeordnet werden konnten. Diese hat es immer schon gegeben, aber bisher wurden sie nicht mit in den Grafiken aufgeführt. So gut wie alle dieser Proben gehören nach wie vor zu einer Omicron-Variante (Stand 5.3.22), jedoch ohne absolute Sicherheit, welche genau.
 
 _Hinweis: Alle Grafiken auf dieser Seite können durch einen Klick vergrößert werden._
 
