@@ -52,6 +52,23 @@ def collapse_pango(var):
 
 
 def rename_pango(var):
+    # Since April 10, this script performs some "collapsing" on all graphics (in this function).
+    # Those with "collapse" in the name collapse down to BA.1 and BA.2
+    # Those without "collapse" also keep BA.1.1 separate from BA.1, to mimic the behaviour of the past, when the RKI
+    # data did not contain any other omicron sublineages.
+    if (var.startswith("BA.1.") and not (var.startswith("BA.1.1.") or var == "BA.1.1")) or var.startswith("BC."):
+        var = "BA.1"
+
+    if var.startswith("BA.1.1."):
+        var = "BA.1.1"
+
+
+    if var.startswith("BA.2."):
+        var = "BA.2"
+
+    if var.startswith("BA.3."):
+        var = "BA.3"
+
     if var.startswith("AY."):
         var = "B.1.617.2"
     
